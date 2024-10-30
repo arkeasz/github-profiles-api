@@ -2,13 +2,13 @@ import express, { Request, Response } from 'express';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
-import {PORT, PRIVATE_KEY, APP_ID, INSTALLATION_ID} from './config'
+import {PORT, PRIVATE_KEY, APP_ID, INSTALLATION_ID, LINK_DOMAIN, LOCALHOST} from './config'
 import cors from 'cors';
 const app = express();
 
 const allowedOrigins = [
-  'http://localhost:5173',
-  'https://tuwebghprofiles.com'
+  LOCALHOST,
+  LINK_DOMAIN
 ];
 
 app.use(cors({
