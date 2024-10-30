@@ -3,7 +3,25 @@ import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import {PORT, PRIVATE_KEY, APP_ID, INSTALLATION_ID} from './config'
+import cors from 'cors';
 const app = express();
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://tuwebghprofiles.com'
+];
+
+app.use(cors({
+  origin: (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+      } else {
+          callback(new Error('No permitido por CORS'));
+      }
+  },
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 async function authenticateApp(): Promise<string> {
   const payload = {
