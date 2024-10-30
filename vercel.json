@@ -1,3 +1,6 @@
 {
-    "rewrites": [{ "source": "/(.*)", "destination": "/dit" }]
+    "builds": [
+        { "src": "src/index.ts", "use": "@vercel/node" }
+    ],
+    "rewrites": [{ "source": "/get-profile/:username", "destination": "/src/index" }]
 }
