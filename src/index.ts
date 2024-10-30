@@ -63,6 +63,25 @@ app.get('/search-users', async (req: Request, res: Response) => {
   }
 });
 
+app.get('/get-repos/:username', async (req: Request, res: Response) => {
+  try {
+    const token = await authenticateApp();
+    const username = req.params.username;
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const perPage = parseInt(req.query.per_page as string, 10) || 20;
+
+    const response = await axios.get(`https://api.github.com/users/${username}/repos?page=${page}&per_page=${perPage}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching repositories:', error);
+    res.status(500).json({ error: 'Error al obtener repositorios del usuario' });
+  }
+});
+
+
 app.get('/get-profile/:username', async (req: Request, res: Response) => {
   try {
     const token = await authenticateApp();
