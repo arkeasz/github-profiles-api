@@ -45,6 +45,23 @@ async function authenticateApp(): Promise<string> {
 
   return response.data.token;
 }
+app.get('/search-users', async (req: Request, res: Response) => {
+  try {
+    const token = await authenticateApp();
+    const query = req.query.q as string;
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const perPage = parseInt(req.query.per_page as string, 10) || 20;
+
+    const response = await axios.get(`https://api.github.com/search/users?q=${query}&page=${page}&per_page=${perPage}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Error al obtener usuarios' });
+  }
+});
 
 app.get('/get-profile/:username', async (req: Request, res: Response) => {
   try {
