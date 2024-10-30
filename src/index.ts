@@ -62,6 +62,7 @@ app.get('/search-users', async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Error al obtener usuarios' });
   }
 });
+
 app.get('/get-repo/:username/:repo', async (req: Request, res: Response) => {
   try {
     const token = await authenticateApp();
@@ -78,6 +79,25 @@ app.get('/get-repo/:username/:repo', async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Error al obtener el repositorio del usuario' });
   }
 });
+
+app.get('/get-repo/:username/:repo/languages', async (req: Request, res: Response) => {
+  try {
+    const token = await authenticateApp();
+    const username = req.params.username;
+    const repo = req.params.repo;
+
+    const response = await axios.get(`https://api.github.com/repos/${username}/${repo}/languages`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching repository:', error);
+    res.status(500).json({ error: 'Error al obtener el repositorio del usuario' });
+  }
+});
+
+
 app.get('/get-repos/:username', async (req: Request, res: Response) => {
   try {
     const token = await authenticateApp();
