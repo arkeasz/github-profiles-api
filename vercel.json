@@ -1,3 +1,6 @@
 {
+    "builds": [
+        { "src": "dist/index.js", "use": "@vercel/node" }
+    ],
     "rewrites": [{ "source": "/get-profile/:username", "destination": "/dist/index" }]
 }
