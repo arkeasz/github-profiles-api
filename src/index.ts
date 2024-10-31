@@ -133,3 +133,9 @@ app.get('/get-profile/:username', async (req: Request, res: Response) => {
 });
 
 app.listen(PORT);
+
+console.log(`Server will run on port: ${PORT}`);
+console.log(`App ID: ${APP_ID}`);
+console.log(`Installation ID: ${INSTALLATION_ID}`);
+console.log(`Allowed Localhost: ${LOCALHOST}`);
+console.log(`Link Domain: ${LINK_DOMAIN}`);
