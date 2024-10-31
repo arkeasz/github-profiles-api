@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
@@ -6,15 +6,15 @@ import {PORT, PRIVATE_KEY, APP_ID, INSTALLATION_ID, LINK_DOMAIN, LOCALHOST} from
 import cors from 'cors';
 const app = express();
 
-const allowedOrigins = [
+const allowedOrigins: string[] = [
   "http://localhost:5173",
-  "https://ghprofiles.vercel.app/"
+  "https://ghprofiles.vercel.app"
 ];
 
 app.use(cors({
   origin: (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) => {
-      console.log('Origin', origin)
-      if (!origin || allowedOrigins.includes(origin)) {
+      console.log('Origin: ', origin)
+      if (!origin || allowedOrigins.includes(origin) ) {
           callback(null, true);
       } else {
           callback(new Error('No permitido por CORS'));
@@ -24,6 +24,7 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
+
 
 async function authenticateApp(): Promise<string> {
   const payload = {
