@@ -7,12 +7,13 @@ import cors from 'cors';
 const app = express();
 
 const allowedOrigins = [
-  LOCALHOST,
-  LINK_DOMAIN
+  "http://localhost:5173",
+  "https://ghprofiles.vercel.app/"
 ];
 
 app.use(cors({
   origin: (origin: string | undefined, callback: (error: Error | null, allow?: boolean) => void) => {
+      console.log('Origin', origin)
       if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
       } else {
@@ -21,6 +22,7 @@ app.use(cors({
   },
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
 }));
 
 async function authenticateApp(): Promise<string> {
