@@ -45,6 +45,8 @@ async function authenticateApp(): Promise<string> {
 
   return response.data.token;
 }
+
+
 app.get('/search-users', async (req: Request, res: Response) => {
   try {
     const token = await authenticateApp();
@@ -131,5 +133,6 @@ app.get('/get-profile/:username', async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Error al obtener el perfil de usuario' });
   }
 });
+
 
 app.listen(PORT);
