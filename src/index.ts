@@ -132,6 +132,4 @@ app.get('/get-profile/:username', async (req: Request, res: Response) => {
   }
 });
 
-app.options('*', cors());
-
 app.listen(PORT);
